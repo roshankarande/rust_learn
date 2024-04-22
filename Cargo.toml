@@ -22,7 +22,7 @@ members = [
     "session2/channels",
     "session2/dashing",
     "session2/deadlock",
-    "session2/hello",
+    "session2/hello_1",
     "session2/mutexes",
     "session2/parking",
     "session2/rayon_example",
