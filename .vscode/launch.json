@@ -1,0 +1,138 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'authentication'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=authentication"
+                ],
+                "filter": {
+                    "name": "authentication",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'login'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=login",
+                    "--package=login"
+                ],
+                "filter": {
+                    "name": "login",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'login'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=login",
+                    "--package=login"
+                ],
+                "filter": {
+                    "name": "login",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'variables'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=variables",
+                    "--package=variables"
+                ],
+                "filter": {
+                    "name": "variables",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'variables'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=variables",
+                    "--package=variables"
+                ],
+                "filter": {
+                    "name": "variables",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'ardanlabs'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=ardanlabs",
+                    "--package=ardanlabs"
+                ],
+                "filter": {
+                    "name": "ardanlabs",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'ardanlabs'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=ardanlabs",
+                    "--package=ardanlabs"
+                ],
+                "filter": {
+                    "name": "ardanlabs",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "admin": {
+        "username": "admin",
+        "password": "5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8",
+        "role": "Admin"
+    },
+    "fred": {
+        "username": "fred",
+        "password": "A1159E9DF3670D549D04524532629F5477CEB7DEEC9B45E47E8C009506ECB2C8",
+        "role": "User"
+    },
+    "bob": {
+        "username": "bob",
+        "password": "092BFE323A20C0067BC9C7E3C572C2716A6A959A19A422D10DD1B433C2D6EEA9",
+        "role": "User"
+    }
+}

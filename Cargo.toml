@@ -1,0 +1,44 @@
+[package]
+name = "ardanlabs"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.82"
+axum = "0.7.5"
+reqwest = { version = "0.12.4", features = ["json"] }
+tokio = { version = "1.37.0", features = ["full"] }
+
+[workspace]
+members = [ 
+    "session1/authentication",
+    # "session1/hello_world", 
+    "session1/login",
+    "session1/login_manager",
+    "session1/variables",
+    "session2/atomics",
+    "session2/channels",
+    "session2/dashing",
+    "session2/deadlock",
+    "session2/hello",
+    "session2/mutexes",
+    "session2/parking",
+    "session2/rayon_example",
+    "session2/rayon_scope",
+    "session2/rwLock",
+    "session2/scoped_threads",
+    "session2/send_funcs_threads",
+    "session2/thread_builder",
+    "session2/thread_priority_example",
+    "session2/workload_divide",
+    "session2/workqueue", "session3/async_channels", "session3/database",
+    "session3/error_handling", "session3/fileio",
+    "session3/hello_async", "session3/hello_axum",
+    "session3/hello_tokio",
+    "session3/hello_tokio_more", "session3/logspan", "session3/networkio", "session3/thumbnail_server",
+    "session3/tokio_blocking", "session3/tokio_select",
+    "session3/tokio_unittest",
+    "try/embed",
+]
