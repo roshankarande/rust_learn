@@ -1,61 +1,78 @@
 use std::env;
 use std::fs;
-use std::io;
-use std::path::Path;
-use std::thread;
-use std::time::{SystemTime, Duration};
+use std::time::Duration;
+
+use tokio::join;
 // use std::path::Path;
 
-fn main() -> io::Result<()> {
-    // Specify the folder path
-    let folder_path = "assets";
+pub async fn cleanup_files(
+    cleanup_path: &str,
+    lifetime_secs: u64,
+    polling_interval_secs: u64,
+) -> anyhow::Result<()> {
 
-    // Get the current time
-    let current_time = SystemTime::now();
+    let ext = "toml";
+    // let current_dir =  env::current_dir().unwrap().as_path().file_name().unwrap();
 
-    println!("Current Directory :: {:?} Current Time :: {:?}", env::current_dir().unwrap().file_name().unwrap(), current_time);
+    if let Ok(dir) = env::current_dir() {
+        let path = dir.into_os_string().into_string().unwrap();
+        println!("Current Directory :: {:?}", path);
+    };
 
-    loop{
+    loop {
+        let entries = fs::read_dir(cleanup_path)?;
 
-    let entries = fs::read_dir(folder_path)?;
+        for entry in entries {
+            let entry = entry?;
+            let metadata = entry.metadata()?;
 
-    for entry in entries {
-        let entry = entry?;
-        let metadata = entry.metadata()?;
+            let modified_time = metadata.modified()?;
 
-        // Get the creation time of the file
-        let created_time = metadata.created()?;
-        let modified_time = metadata.modified()?;
+            // Calculate the duration since the file was created
+            let duration_since_creation = match modified_time.elapsed() {
+                Ok(duration) => duration,
+                Err(_) => {
+                    // Unable to get the duration, skip this file
+                    continue;
+                }
+            };
 
-        // Calculate the duration since the file was created
-        let duration_since_creation = match created_time.elapsed() {
-            Ok(duration) => duration,
-            Err(_) => {
-                // Unable to get the duration, skip this file
-                continue;
+            println!(
+                "{:?} modified {:.2?} secs ago",
+                entry.file_name(),
+                modified_time.elapsed().unwrap().as_secs_f64()
+            );
+
+            // Check if the modified duration is greater than lifetime_secs
+            if duration_since_creation > Duration::from_secs(lifetime_secs) {
+                // Delete the file
+                let file_path = entry.path();
+                let extension = file_path.extension().unwrap().to_ascii_lowercase();
+                if metadata.is_file() && extension == ext {
+                    fs::remove_file(&file_path)?;
+                    println!("Deleted file: {:?}", file_path);
+                }
+                // else if metadata.is_dir() {
+                //     // fs::remove_dir_all(&file_path)?;
+                //     println!("Deleted directory: {:?}", file_path);
+                // }
             }
-        };
-
-        println!("{:?} created {:?} s ago | modified {:?} s ago | ext {:?}", entry.file_name(), created_time.elapsed().unwrap().as_secs_f64(), modified_time.elapsed().unwrap().as_secs_f64(), entry.path().extension().unwrap() );
-
-        // Check if the duration is greater than 5 minutes
-        if duration_since_creation > Duration::from_secs(5 * 60) {
-            // Delete the file
-            let file_path = entry.path();
-            let extension = file_path.extension().unwrap().to_ascii_lowercase();
-            if metadata.is_file() && extension == "toml"{
-                fs::remove_file(&file_path)?;
-                println!("Deleted file: {:?}", file_path);
-            } 
-            // else if metadata.is_dir() {
-            //     // fs::remove_dir_all(&file_path)?;
-            //     println!("Deleted directory: {:?}", file_path);
-            // }
         }
-    }
 
-    thread::sleep(Duration::from_secs(10));
+        tokio::time::sleep(Duration::from_secs(polling_interval_secs)).await;
+    }
 }
 
-    Ok(())
+async fn hello_world() {
+    println!("Hello");
+}
+
+#[tokio::main]
+async fn main() {
+    let result = join!(
+        cleanup_files("assets", 20, 5), 
+        hello_world()
+    );
+
+    println!("{:?}", result);
 }

@@ -40,5 +40,5 @@ members = [
     "session3/hello_tokio_more", "session3/logspan", "session3/networkio", "session3/thumbnail_server",
     "session3/tokio_blocking", "session3/tokio_select",
     "session3/tokio_unittest",
-    "try/embed",
+    "utils/old_files_deletion",
 ]
